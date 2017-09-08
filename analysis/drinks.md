@@ -4,22 +4,8 @@ JP
 July 7, 2017
 
 ``` r
+library(knitr)
 library(tidyverse)
-```
-
-    ## Loading tidyverse: ggplot2
-    ## Loading tidyverse: tibble
-    ## Loading tidyverse: tidyr
-    ## Loading tidyverse: readr
-    ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
-
-    ## Conflicts with tidy packages ----------------------------------------------
-
-    ## filter(): dplyr, stats
-    ## lag():    dplyr, stats
-
-``` r
 library(readr)
 library(stringr)
 library(forcats)
@@ -107,9 +93,7 @@ d %>%
   )
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
+![](figs/unnamed-chunk-3-1.png)
 
 ``` r
 d %>% 
@@ -126,13 +110,7 @@ d %>%
   )
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-    ## Warning: Removed 15 rows containing non-finite values (stat_smooth).
-
-    ## Warning: Removed 15 rows containing missing values (geom_point).
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
+![](figs/unnamed-chunk-4-1.png)
 
 ``` r
 d %>% 
@@ -147,9 +125,7 @@ d %>%
   )
 ```
 
-    ## Warning: Removed 15 rows containing non-finite values (stat_boxplot).
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
+![](figs/unnamed-chunk-5-1.png)
 
 ``` r
 d %>% 
@@ -158,13 +134,7 @@ d %>%
   geom_smooth() 
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-    ## Warning: Removed 39 rows containing non-finite values (stat_smooth).
-
-    ## Warning: Removed 39 rows containing missing values (geom_point).
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png)
+![](figs/unnamed-chunk-6-1.png)
 
 ``` r
 d %>% 
@@ -179,9 +149,7 @@ d %>%
   ) 
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-2.png)
+![](figs/unnamed-chunk-6-2.png)
 
 ``` r
 d %>% 
@@ -206,12 +174,39 @@ d %>%
   )
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-    ## Warning: Removed 5 rows containing non-finite values (stat_smooth).
-
-    ## Warning: Removed 5 rows containing missing values (geom_point).
-
-![](drinks_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+![](figs/unnamed-chunk-7-1.png)
 
 TBD: Add in religion as a variable.
+
+High PPP countries in northern latitudes driving the plunge in alcohol consumption:
+
+``` r
+d %>% 
+  mutate(
+    ppp_f = ifelse(ppp <= 15000, "low",
+      ifelse(ppp > 15000 & ppp < 30000, "medium",
+      ifelse(ppp >= 30000, "high", NA)
+    )),
+    ppp_f = factor(ppp_f, levels = c("low", "medium", "high"))
+  ) %>% 
+  filter(
+    complete.cases(ppp_f),
+    ppp_f == "high",
+    latitude > 50) %>% 
+  select(country, total, latitude, ppp) %>% 
+  kable()
+```
+
+| country        |  total|  latitude|       ppp|
+|:---------------|------:|---------:|---------:|
+| Belgium        |   10.5|  50.50389|  46383.24|
+| Canada         |    8.2|  56.13037|  44025.18|
+| Denmark        |   10.4|  56.26392|  49695.97|
+| Finland        |   10.0|  61.92411|  43052.73|
+| Germany        |   11.3|  51.16569|  48729.59|
+| Iceland        |    6.6|  64.96305|  51398.93|
+| Ireland        |   11.4|  53.41291|  68882.88|
+| Netherlands    |    9.4|  52.13263|  50898.09|
+| Norway         |    6.7|  60.47202|  59301.67|
+| Sweden         |    7.2|  60.12816|  49174.86|
+| United Kingdom |   10.4|  55.37805|  42608.92|

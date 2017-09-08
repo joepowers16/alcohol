@@ -5,7 +5,16 @@ date: "July 7, 2017"
 output: github_document
 ---
 
+```{r global options, include=FALSE}
+knitr::opts_chunk$set(
+  fig.path = 'figs/', fig.show = 'asis', dpi = 300, 
+  include = TRUE, echo = TRUE, 
+  warning = FALSE, message = FALSE, cache = FALSE
+) 
+```
+
 ```{r}
+library(knitr)
 library(tidyverse)
 library(readr)
 library(stringr)
@@ -47,6 +56,8 @@ ppp <-
 d <- drinks %>% 
   left_join(lat, by = c("country" = "name")) %>% 
   left_join(ppp, by = "country")
+
+# write_rds(d, "../data/drinks_data_merged.rds")
 ```
 
 Poking around: 
@@ -149,4 +160,24 @@ d %>%
 ```
 
 TBD: Add in religion as a variable. 
+
+High PPP countries in northern latitudes driving the plunge in alcohol consumption:
+```{r}
+d %>% 
+  mutate(
+    ppp_f = ifelse(ppp <= 15000, "low",
+      ifelse(ppp > 15000 & ppp < 30000, "medium",
+      ifelse(ppp >= 30000, "high", NA)
+    )),
+    ppp_f = factor(ppp_f, levels = c("low", "medium", "high"))
+  ) %>% 
+  filter(
+    complete.cases(ppp_f),
+    ppp_f == "high",
+    latitude > 50) %>% 
+  select(country, total, latitude, ppp) %>% 
+  kable()
+```
+
+
 
