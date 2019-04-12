@@ -1,0 +1,53 @@
+---
+title: "munge"
+author: "JP"
+date: "4/11/2019"
+output: html_document
+---
+
+```{r}
+library(knitr)
+library(tidyverse)
+library(readr)
+library(stringr)
+library(forcats)
+```
+
+```{r data paths}
+# https://github.com/fivethirtyeight/data/tree/master/alcohol-consumption
+data_drinks <- "../data/raw/drinks.csv"
+
+# "https://developers.google.com/public-data/docs/canonical/countries_csv"
+data_longlat <- "../data/raw/long_lat.csv"
+
+# http://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD
+data_ppp <- "../data/raw/ppp/API_NY.GDP.PCAP.PP.CD_DS2_en_csv_v2.csv"
+```
+
+```{r load data, include=FALSE}
+# drinks data
+read_lines(data_drinks, n_max = 5)
+
+drinks <- read_csv(data_drinks) %>% 
+  rename(total = total_litres_of_pure_alcohol)
+
+# latitude data
+read_lines(data_longlat, n_max = 5)
+
+lat <- read_csv(data_longlat) %>% 
+  rename(abbr = country)
+
+# ppp data
+readLines(data_ppp, n = 10)
+
+ppp <- 
+  read_csv(data_ppp, skip = 2) %>% 
+  select(country = `Country Name`, abbr = `Country Code`, ppp = `2016`)
+
+# join the data 
+d <- drinks %>% 
+  left_join(lat, by = c("country" = "name")) %>% 
+  left_join(ppp, by = "country")
+
+write_rds(d, "../data/ds_drinks_merged.rds")
+```
