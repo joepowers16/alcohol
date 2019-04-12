@@ -5,20 +5,22 @@ date: "July 7, 2017"
 output: github_document
 ---
 
-```{r global options, include=FALSE}
-knitr::opts_chunk$set(
-  fig.path = 'figs/', fig.show = 'asis', dpi = 300, 
-  include = TRUE, echo = TRUE, 
-  warning = FALSE, message = FALSE, cache = FALSE
-) 
-```
-
+# Overview
+This script explores global norms of alcohol consumption. I performed this analysis because I had no idea what alcohol consumption looked like globally, and I wanted to know. 
 ```{r}
 library(knitr)
 library(tidyverse)
 library(readr)
 library(stringr)
 library(forcats)
+```
+
+```{r global options, include=FALSE}
+opts_chunk$set(
+  fig.path = 'figs/', fig.show = 'asis', dpi = 300, 
+  include = TRUE, echo = TRUE, 
+  warning = FALSE, message = FALSE, cache = FALSE
+) 
 ```
 
 ```{r load data, include=FALSE}
@@ -74,10 +76,10 @@ ds_drinks %>%
 ds_drinks %>% 
   ggplot(aes(x = latitude, y = total)) + 
   geom_boxplot(aes(group = cut_width(latitude, 5))) + 
-  scale_x_continuous(breaks = seq(-45, 65, by = 5)) + 
+  scale_x_continuous(breaks = seq(-65, 65, by = 5), limits = c(-65, 65)) + 
   geom_vline(xintercept = 0, color = "blue") + 
   labs(
-    title = "Drinking spikes when you are farther than 30-degrees north from the equator,\nespecially so in the northern hemisphere.",
+    title = "Drinking spikes when you are farther than 30-degrees north of the equator,\nor 15 degrees south",
     x = "Latitude",
     y = "Liters of alcohol consumed per person per year"
   )
@@ -141,7 +143,9 @@ ds_drinks %>%
     ppp_f == "high",
     latitude > 50) %>% 
   select(country, total, latitude, ppp) %>% 
-  kable()
+  arrange(-total) %>% 
+  kable() %>% 
+  kableExtra::kable_styling()
 ```
 
 
