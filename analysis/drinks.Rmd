@@ -21,57 +21,22 @@ library(stringr)
 library(forcats)
 ```
 
-```{r data paths}
-# https://github.com/fivethirtyeight/data/tree/master/alcohol-consumption
-data_drinks <- "../data/drinks.csv"
-
-# "https://developers.google.com/public-data/docs/canonical/countries_csv"
-data_longlat <- "../data/long_lat.csv"
-
-# http://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD
-data_ppp <- "../data/ppp/API_NY.GDP.PCAP.PP.CD_DS2_en_csv_v2.csv"
-```
-
 ```{r load data, include=FALSE}
-# drinks data
-read_lines(data_drinks, n_max = 5)
-
-drinks <- read_csv(data_drinks) %>% 
-  rename(total = total_litres_of_pure_alcohol)
-
-# latitude data
-read_lines(data_longlat, n_max = 5)
-
-lat <- read_csv(data_longlat) %>% 
-  rename(abbr = country)
-
-# ppp data
-readLines(data_ppp, n = 10)
-
-ppp <- 
-  read_csv(data_ppp, skip = 4) %>% 
-  select(country = `Country Name`, abbr = `Country Code`, ppp = `2016`)
-
-# join the data 
-d <- drinks %>% 
-  left_join(lat, by = c("country" = "name")) %>% 
-  left_join(ppp, by = "country")
-
-# write_rds(d, "../data/drinks_data_merged.rds")
+ds_drinks <- read_rds("../data/ds_drinks_merged.rds")
 ```
 
 Poking around: 
 ```{r}
-d %>% arrange(desc(total))
+ds_drinks %>% arrange(desc(total))
 
-d %>% filter(str_detect(country, "R")) %>% arrange(desc(country))
+ds_drinks %>% filter(str_detect(country, "R")) %>% arrange(desc(country))
 
-d %>% filter(country == "Russian Federation")
+ds_drinks %>% filter(country == "Russian Federation")
 ```
 
 
 ```{r}
-d %>% 
+ds_drinks %>% 
   mutate(
     lat_abs = abs(latitude),
     ns = ifelse(latitude > 0, "North",
@@ -91,7 +56,7 @@ d %>%
 ```
 
 ```{r}
-d %>% 
+ds_drinks %>% 
   ggplot(aes(x = latitude, y = total)) + 
   geom_point(alpha = .75) + 
   geom_smooth() + 
@@ -106,7 +71,7 @@ d %>%
 ```
 
 ```{r}
-d %>% 
+ds_drinks %>% 
   ggplot(aes(x = latitude, y = total)) + 
   geom_boxplot(aes(group = cut_width(latitude, 5))) + 
   scale_x_continuous(breaks = seq(-45, 65, by = 5)) + 
@@ -119,12 +84,12 @@ d %>%
 ```
 
 ```{r}
-d %>% 
+ds_drinks %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
   geom_smooth() 
 
-d %>% 
+ds_drinks %>% 
   filter(ppp < 5e4) %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
@@ -137,7 +102,7 @@ d %>%
 ```
 
 ```{r}
-d %>% 
+ds_drinks %>% 
   mutate(
     ppp_f = ifelse(ppp <= 15000, "low",
       ifelse(ppp > 15000 & ppp < 30000, "medium",
@@ -163,7 +128,7 @@ TBD: Add in religion as a variable.
 
 High PPP countries in northern latitudes driving the plunge in alcohol consumption:
 ```{r}
-d %>% 
+ds_drinks %>% 
   mutate(
     ppp_f = ifelse(ppp <= 15000, "low",
       ifelse(ppp > 15000 & ppp < 30000, "medium",
