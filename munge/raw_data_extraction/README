@@ -1,0 +1,1 @@
+The scripts in this folder are not part of the make file. They are run once at the start of the project to add raw data and are not meant to be rerun with each rebuild. 
