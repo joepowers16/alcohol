@@ -3,42 +3,46 @@ title: "Alcohol consumption as function of latitude and wealth"
 author: "JP"
 date: "July 7, 2017"
 output: github_document
+always_allow_html: yes
 ---
 
 # Overview
 This script explores global norms of alcohol consumption. I performed this analysis because I had no idea what alcohol consumption looked like globally, and I wanted to know. 
-```{r}
-library(knitr)
-library(tidyverse)
-library(readr)
-library(stringr)
-library(forcats)
-```
 
 ```{r global options, include=FALSE}
-opts_chunk$set(
+knitr::opts_chunk$set(
   fig.path = 'figs/', fig.show = 'asis', dpi = 300, 
   include = TRUE, echo = TRUE, 
   warning = FALSE, message = FALSE, cache = FALSE
 ) 
 ```
 
+```{r}
+library(breadcrumbs)
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+library(readr)
+library(stringr)
+library(forcats)
+source_file_paths()
+```
+
 ```{r load data, include=FALSE}
-ds_drinks <- read_rds("../data/ds_drinks_merged.rds")
+drinks <- read_rds(file_consumption_latlong_ppp)
 ```
 
 Poking around: 
 ```{r}
-ds_drinks %>% arrange(desc(total))
+drinks %>% arrange(desc(total))
 
-ds_drinks %>% filter(str_detect(country, "R")) %>% arrange(desc(country))
+drinks %>% filter(str_detect(country, "R")) %>% arrange(desc(country))
 
-ds_drinks %>% filter(country == "Russian Federation")
+drinks %>% filter(country == "Russian Federation")
 ```
 
-
 ```{r}
-ds_drinks %>% 
+drinks %>% 
   mutate(
     lat_abs = abs(latitude),
     ns = ifelse(latitude > 0, "North",
@@ -58,7 +62,7 @@ ds_drinks %>%
 ```
 
 ```{r}
-ds_drinks %>% 
+drinks %>% 
   ggplot(aes(x = latitude, y = total)) + 
   geom_point(alpha = .75) + 
   geom_smooth() + 
@@ -73,7 +77,7 @@ ds_drinks %>%
 ```
 
 ```{r}
-ds_drinks %>% 
+drinks %>% 
   ggplot(aes(x = latitude, y = total)) + 
   geom_boxplot(aes(group = cut_width(latitude, 5))) + 
   scale_x_continuous(breaks = seq(-65, 65, by = 5), limits = c(-65, 65)) + 
@@ -86,12 +90,12 @@ ds_drinks %>%
 ```
 
 ```{r}
-ds_drinks %>% 
+drinks %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
   geom_smooth() 
 
-ds_drinks %>% 
+drinks %>% 
   filter(ppp < 5e4) %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
@@ -104,7 +108,7 @@ ds_drinks %>%
 ```
 
 ```{r}
-ds_drinks %>% 
+drinks %>% 
   mutate(
     ppp_f = ifelse(ppp <= 15000, "low",
       ifelse(ppp > 15000 & ppp < 30000, "medium",
@@ -130,7 +134,8 @@ TBD: Add in religion as a variable.
 
 High PPP countries in northern latitudes driving the plunge in alcohol consumption:
 ```{r}
-ds_drinks %>% 
+my_table <- 
+  drinks %>% 
   mutate(
     ppp_f = ifelse(ppp <= 15000, "low",
       ifelse(ppp > 15000 & ppp < 30000, "medium",
@@ -144,9 +149,7 @@ ds_drinks %>%
     latitude > 50) %>% 
   select(country, total, latitude, ppp) %>% 
   arrange(-total) %>% 
-  kable() %>% 
-  kableExtra::kable_styling()
+  kable(format = "html") 
+
+kable_styling(my_table)
 ```
-
-
-
