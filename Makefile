@@ -17,14 +17,11 @@ DIR_MUNGE = ./munge
 DIR_ANALYSIS = ./analysis
 DIR_DATA = ./data
 DIR_RAW = $(DIR_DATA)/raw
-DIR_REPORTS = ./reports
 
 # Recursively search all subdirectories of the project for prerequisites
 VPATH = $(shell find . -type d)
 # generate html report from Rmd file
 RENDER = Rscript -e "rmarkdown::render('$<')"
-# generate html report from Rmd file and move it to "reports" directory
-RENDER_TO_REPORTS = $(RENDER); mv $(<:.Rmd=.html) $(DIR_REPORTS)
 # execute Rmd file without generating report
 SOURCE_RMD_NO_REPORT = Rscript -e 'knitr::knit("$<", output = tempfile())'
 ##############################################################################
