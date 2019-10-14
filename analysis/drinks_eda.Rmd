@@ -25,6 +25,7 @@ library(tidyverse)
 library(readr)
 library(stringr)
 library(forcats)
+library(scales)
 source_file_paths()
 theme_set(theme_minimal())
 ```
@@ -152,7 +153,7 @@ my_table <-
   mutate(
     latitude = round(latitude),
     `GDP PPP` = base_round(`GDP PPP`, base = 1e3),
-    `GDP PPP` = scales::dollar(`GDP PPP`)
+    `GDP PPP` = dollar(`GDP PPP`)
   ) %>% 
   arrange(total) %>% 
   kable(format = "html") 
