@@ -49,9 +49,9 @@ latitude
 
 </th>
 
-<th style="text-align:right;">
+<th style="text-align:left;">
 
-ppp
+GDP PPP
 
 </th>
 
@@ -65,305 +65,25 @@ ppp
 
 <td style="text-align:left;">
 
-Lithuania
+Iceland
 
 </td>
 
 <td style="text-align:right;">
 
-12.9
+6.6
 
 </td>
 
 <td style="text-align:right;">
 
-55.16944
+65
 
 </td>
-
-<td style="text-align:right;">
-
-30299.92
-
-</td>
-
-</tr>
-
-<tr>
 
 <td style="text-align:left;">
 
-Ireland
-
-</td>
-
-<td style="text-align:right;">
-
-11.4
-
-</td>
-
-<td style="text-align:right;">
-
-53.41291
-
-</td>
-
-<td style="text-align:right;">
-
-70522.23
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Germany
-
-</td>
-
-<td style="text-align:right;">
-
-11.3
-
-</td>
-
-<td style="text-align:right;">
-
-51.16569
-
-</td>
-
-<td style="text-align:right;">
-
-49921.33
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Belgium
-
-</td>
-
-<td style="text-align:right;">
-
-10.5
-
-</td>
-
-<td style="text-align:right;">
-
-50.50389
-
-</td>
-
-<td style="text-align:right;">
-
-47214.18
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Denmark
-
-</td>
-
-<td style="text-align:right;">
-
-10.4
-
-</td>
-
-<td style="text-align:right;">
-
-56.26392
-
-</td>
-
-<td style="text-align:right;">
-
-50694.19
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-United Kingdom
-
-</td>
-
-<td style="text-align:right;">
-
-10.4
-
-</td>
-
-<td style="text-align:right;">
-
-55.37805
-
-</td>
-
-<td style="text-align:right;">
-
-42977.22
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Finland
-
-</td>
-
-<td style="text-align:right;">
-
-10.0
-
-</td>
-
-<td style="text-align:right;">
-
-61.92411
-
-</td>
-
-<td style="text-align:right;">
-
-43729.96
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Estonia
-
-</td>
-
-<td style="text-align:right;">
-
-9.5
-
-</td>
-
-<td style="text-align:right;">
-
-58.59527
-
-</td>
-
-<td style="text-align:right;">
-
-30897.55
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Netherlands
-
-</td>
-
-<td style="text-align:right;">
-
-9.4
-
-</td>
-
-<td style="text-align:right;">
-
-52.13263
-
-</td>
-
-<td style="text-align:right;">
-
-51338.57
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Canada
-
-</td>
-
-<td style="text-align:right;">
-
-8.2
-
-</td>
-
-<td style="text-align:right;">
-
-56.13037
-
-</td>
-
-<td style="text-align:right;">
-
-45011.64
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-Sweden
-
-</td>
-
-<td style="text-align:right;">
-
-7.2
-
-</td>
-
-<td style="text-align:right;">
-
-60.12816
-
-</td>
-
-<td style="text-align:right;">
-
-49084.07
+$53,000
 
 </td>
 
@@ -385,13 +105,13 @@ Norway
 
 <td style="text-align:right;">
 
-60.47202
+60
 
 </td>
 
-<td style="text-align:right;">
+<td style="text-align:left;">
 
-58138.44
+$58,000
 
 </td>
 
@@ -401,25 +121,305 @@ Norway
 
 <td style="text-align:left;">
 
-Iceland
+Sweden
 
 </td>
 
 <td style="text-align:right;">
 
-6.6
+7.2
 
 </td>
 
 <td style="text-align:right;">
 
-64.96305
+60
+
+</td>
+
+<td style="text-align:left;">
+
+$49,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Canada
 
 </td>
 
 <td style="text-align:right;">
 
-52582.29
+8.2
+
+</td>
+
+<td style="text-align:right;">
+
+56
+
+</td>
+
+<td style="text-align:left;">
+
+$45,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Netherlands
+
+</td>
+
+<td style="text-align:right;">
+
+9.4
+
+</td>
+
+<td style="text-align:right;">
+
+52
+
+</td>
+
+<td style="text-align:left;">
+
+$51,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Estonia
+
+</td>
+
+<td style="text-align:right;">
+
+9.5
+
+</td>
+
+<td style="text-align:right;">
+
+59
+
+</td>
+
+<td style="text-align:left;">
+
+$31,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Finland
+
+</td>
+
+<td style="text-align:right;">
+
+10.0
+
+</td>
+
+<td style="text-align:right;">
+
+62
+
+</td>
+
+<td style="text-align:left;">
+
+$44,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Denmark
+
+</td>
+
+<td style="text-align:right;">
+
+10.4
+
+</td>
+
+<td style="text-align:right;">
+
+56
+
+</td>
+
+<td style="text-align:left;">
+
+$51,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+United Kingdom
+
+</td>
+
+<td style="text-align:right;">
+
+10.4
+
+</td>
+
+<td style="text-align:right;">
+
+55
+
+</td>
+
+<td style="text-align:left;">
+
+$43,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Belgium
+
+</td>
+
+<td style="text-align:right;">
+
+10.5
+
+</td>
+
+<td style="text-align:right;">
+
+51
+
+</td>
+
+<td style="text-align:left;">
+
+$47,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Germany
+
+</td>
+
+<td style="text-align:right;">
+
+11.3
+
+</td>
+
+<td style="text-align:right;">
+
+51
+
+</td>
+
+<td style="text-align:left;">
+
+$50,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Ireland
+
+</td>
+
+<td style="text-align:right;">
+
+11.4
+
+</td>
+
+<td style="text-align:right;">
+
+53
+
+</td>
+
+<td style="text-align:left;">
+
+$71,000
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Lithuania
+
+</td>
+
+<td style="text-align:right;">
+
+12.9
+
+</td>
+
+<td style="text-align:right;">
+
+55
+
+</td>
+
+<td style="text-align:left;">
+
+$30,000
 
 </td>
 

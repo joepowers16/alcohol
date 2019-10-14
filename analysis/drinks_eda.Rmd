@@ -26,6 +26,7 @@ library(readr)
 library(stringr)
 library(forcats)
 source_file_paths()
+theme_set(theme_minimal())
 ```
 
 ```{r load data, include=FALSE}
@@ -147,8 +148,13 @@ my_table <-
     complete.cases(ppp_f),
     ppp_f == "high",
     latitude > 50) %>% 
-  select(country, total, latitude, ppp) %>% 
-  arrange(-total) %>% 
+  select(country, total, latitude, `GDP PPP` = ppp) %>% 
+  mutate(
+    latitude = round(latitude),
+    `GDP PPP` = base_round(`GDP PPP`, base = 1e3),
+    `GDP PPP` = scales::dollar(`GDP PPP`)
+  ) %>% 
+  arrange(total) %>% 
   kable(format = "html") 
 
 kable_styling(my_table)
