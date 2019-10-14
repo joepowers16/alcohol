@@ -1,2 +1,1 @@
-# alcohol
-Exploratory data analysis on publicly available datasets. 
+This project explores publicly available data on alcohol consumption. 
