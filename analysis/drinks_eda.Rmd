@@ -95,13 +95,22 @@ drinks %>%
 drinks %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
-  geom_smooth() 
+  geom_smooth() + 
+  scale_x_continuous(labels = dollar) + 
+  labs(
+    title = "Lower income is not associated with higher consumption",
+    x = "GDP per Person (PPP) in USD",
+    y = "Liters of alcohol consumed per person per year"
+  ) 
+```
 
+```{r}
 drinks %>% 
   filter(ppp < 5e4) %>% 
   ggplot(aes(x = ppp, y = total)) + 
   geom_point(alpha = .75) + 
   geom_smooth() + 
+  scale_x_continuous(labels = dollar) + 
   labs(
     title = "Lower income is not associated with higher consumption",
     x = "GDP per Person (PPP) in USD",

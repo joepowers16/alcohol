@@ -7,8 +7,7 @@ July 7, 2017
 
 This script explores global norms of alcohol consumption. I performed
 this analysis because I had no idea what alcohol consumption looked like
-globally, and I wanted to
-know.
+globally, and I wanted to know.
 
 ![](figs/unnamed-chunk-2-1.png)<!-- -->
 
@@ -16,9 +15,11 @@ know.
 
 ![](figs/unnamed-chunk-4-1.png)<!-- -->
 
-![](figs/unnamed-chunk-5-1.png)<!-- -->![](figs/unnamed-chunk-5-2.png)<!-- -->
+![](figs/unnamed-chunk-5-1.png)<!-- -->
 
 ![](figs/unnamed-chunk-6-1.png)<!-- -->
+
+![](figs/unnamed-chunk-7-1.png)<!-- -->
 
 TBD: Add in religion as a variable.
 
