@@ -1,16 +1,16 @@
 ---
-title: "Alcohol consumption as function of latitude and wealth"
-author: "Joseph T. Powers"
+title: "Alcohol Consumption by Country"
+author: "Joseph T. Powers"  
 date: "2017-07-17"
 output: github_document
 always_allow_html: yes
 ---
 
 # Overview
-This script explores global norms of alcohol consumption. I performed this analysis because I was curious to explore some uninformed hypotheses about how income and cold weather drive higher alcohol consumption. 
+This script explores global norms of alcohol consumption. It's questions were driven by some uninformed hypotheses I held about how poverty and cold weather might drive higher alcohol consumption. 
 
-# TL;DR: 
-People in wealthy countries drink more than people in poorer countries. People drink more in cold climates, but there is an interesting reversal in the northernmost latitudes driven by wealthier countries.
+## TL;DR 
+People in wealthy countries drink more than people in poorer countries. People drink more in cold climates, but there is an interesting reversal in the wealthier countries of the northernmost latitudes.
 
 ```{r global options, include=FALSE}
 knitr::opts_chunk$set(

@@ -1,13 +1,19 @@
-Alcohol consumption as function of latitude and wealth
+Alcohol Consumption by Country
 ================
-JP
-July 7, 2017
+Joseph T. Powers
+2017-07-17
 
 # Overview
 
-This script explores global norms of alcohol consumption. I performed
-this analysis because I had no idea what alcohol consumption looked like
-globally, and I wanted to know.
+This script explores global norms of alcohol consumption. It’s questions
+were driven by some uninformed hypotheses I held about how poverty and
+cold weather might drive higher alcohol consumption.
+
+## TL;DR
+
+People in wealthy countries drink more than people in poorer countries.
+People drink more in cold climates, but there is an interesting reversal
+in the wealthier countries of the northernmost latitudes.
 
 ![](figs/unnamed-chunk-2-1.png)<!-- -->
 
