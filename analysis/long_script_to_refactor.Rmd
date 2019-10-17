@@ -1,0 +1,205 @@
+---
+title: "Alcohol Consumption by Country"
+author: "Joseph T. Powers"  
+date: "2017-07-17"
+output: github_document
+always_allow_html: yes
+---
+
+# Overview
+This script explores global norms of alcohol consumption. It's questions were driven by some uninformed hypotheses I held about how poverty and cold weather might drive higher alcohol consumption. 
+
+## TL;DR 
+People in wealthy countries drink more than people in poorer countries. People drink more in cold climates, but there is an interesting reversal in the wealthier countries of the northernmost latitudes.
+
+```{r global options, include=FALSE}
+knitr::opts_chunk$set(
+  fig.path = 'figs/', fig.show = 'asis', dpi = 300, 
+  include = TRUE, echo = FALSE, 
+  warning = FALSE, message = FALSE, cache = FALSE
+) 
+```
+
+```{r}
+library(breadcrumbs)
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+library(readr)
+library(stringr)
+library(forcats)
+library(scales)
+source_file_paths()
+theme_set(theme_minimal())
+```
+
+```{r}
+library(breadcrumbs)
+library(tidyverse)
+source_file_paths()
+
+read_lines(file_consumption_raw, n_max = 5)
+consumption <- read_csv(file_consumption_raw)
+
+read_lines(file_longitude_latitude_raw, n_max = 5)
+longlat <- read_csv(file_longitude_latitude_raw)
+
+readLines(file_gdp_ppp_raw, n = 10)
+ppp <- read_csv(file_gdp_ppp_raw, skip = 3)
+```
+
+```{r}
+## clean up data ----
+##############################################################################-
+
+consumption <- consumption %>% rename(total = total_litres_of_pure_alcohol)
+
+longlat <- 
+  longlat %>% 
+  rename(abbr_2 = country, country = name)
+
+ppp <- 
+  ppp %>% 
+  select(country = `Country Name`, abbr = `Country Code`, ppp = `2016`)
+
+# join the data 
+drinks <- consumption %>% 
+  left_join(longlat, by = "country") %>% 
+  left_join(ppp, by = "country")
+```
+
+
+```{r Poking around, include=FALSE}
+drinks %>% arrange(desc(total))
+
+drinks %>% filter(str_detect(country, "R")) %>% arrange(desc(country))
+
+drinks %>% filter(country == "Russian Federation")
+```
+
+```{r}
+drinks %>% 
+  mutate(
+    lat_abs = abs(latitude),
+    ns = ifelse(latitude > 0, "North",
+      ifelse(latitude <= 0, "South", NA))
+  ) %>% 
+  filter(complete.cases(ns)) %>% 
+  ggplot(aes(x = lat_abs, y = total, color = ns)) + 
+  geom_point() + 
+  geom_smooth() + 
+  scale_color_discrete("Hemisphere") + 
+  scale_x_continuous(breaks = seq(0, 80, by = 10)) + 
+  labs(
+    title = "Drinking spikes 30 degrees north of the equator and 15 degrees south",
+    x = "Absolute Value for Latitude",
+    y = "Liters of alcohol consumed per person per year"
+  )
+```
+
+```{r}
+drinks %>% 
+  ggplot(aes(x = latitude, y = total)) + 
+  geom_point(alpha = .75) + 
+  geom_smooth() + 
+  geom_vline(xintercept = 0, color = "green") + 
+  scale_color_discrete("Hemisphere") + 
+  scale_x_continuous(breaks = seq(-45, 65, by = 5)) + 
+  labs(
+    title = "Drinking spikes 30 degrees north of the equator and 15 degrees south",
+    x = "Latitude",
+    y = "Liters of alcohol consumed per person per year"
+  )
+```
+
+```{r}
+drinks %>% 
+  ggplot(aes(x = latitude, y = total)) + 
+  geom_boxplot(aes(group = cut_width(latitude, 5))) + 
+  scale_x_continuous(breaks = seq(-65, 65, by = 5), limits = c(-65, 65)) + 
+  geom_vline(xintercept = 0, color = "blue") + 
+  labs(
+    title = "Drinking spikes 30 degrees north of the equator and 15 degrees south",
+    x = "Latitude",
+    y = "Liters of alcohol consumed per person per year"
+  )
+```
+
+```{r}
+drinks %>% 
+  ggplot(aes(x = ppp, y = total)) + 
+  geom_point(alpha = .75) + 
+  geom_smooth() + 
+  scale_x_continuous(labels = dollar) + 
+  labs(
+    title = "Lower income is not associated with higher consumption",
+    x = "GDP per Person (PPP) in USD",
+    y = "Liters of alcohol consumed per person per year"
+  ) 
+```
+
+```{r}
+drinks %>% 
+  filter(ppp < 5e4) %>% 
+  ggplot(aes(x = ppp, y = total)) + 
+  geom_point(alpha = .75) + 
+  geom_smooth() + 
+  scale_x_continuous(labels = dollar) + 
+  labs(
+    title = "Lower income is not associated with higher consumption",
+    x = "GDP per Person (PPP) in USD",
+    y = "Liters of alcohol consumed per person per year"
+  ) 
+```
+
+```{r}
+drinks %>% 
+  mutate(
+    ppp_f = ifelse(ppp <= 15000, "low",
+      ifelse(ppp > 15000 & ppp < 30000, "medium",
+      ifelse(ppp >= 30000, "high", NA)
+    )),
+    ppp_f = factor(ppp_f, levels = c("low", "medium", "high"))
+  ) %>% 
+  filter(complete.cases(ppp_f)) %>% 
+  ggplot(aes(x = latitude, y = total, color = fct_rev(ppp_f))) + 
+  geom_point(alpha = .75) + 
+  geom_smooth() + 
+  geom_vline(xintercept = 0, color = "black") + 
+  scale_color_discrete("PPP") + 
+  scale_x_continuous(breaks = seq(-45, 65, by = 5)) + 
+  labs(
+    title = "In the far north, wealthy countries buck the trend of higher drinking.",
+    x = "Latitude",
+    y = "Liters of alcohol consumed per person per year"
+  )
+```
+
+TBD: Add in religion as a variable. 
+
+Wealthy countries in northernmost latitudes driving the plunge in alcohol consumption:
+```{r}
+my_table <- 
+  drinks %>% 
+  mutate(
+    ppp_f = ifelse(ppp <= 15000, "low",
+      ifelse(ppp > 15000 & ppp < 30000, "medium",
+      ifelse(ppp >= 30000, "high", NA)
+    )),
+    ppp_f = factor(ppp_f, levels = c("low", "medium", "high"))
+  ) %>% 
+  filter(
+    complete.cases(ppp_f),
+    ppp_f == "high",
+    latitude > 50) %>% 
+  select(country, total, latitude, `GDP PPP` = ppp) %>% 
+  mutate(
+    latitude = round(latitude),
+    `GDP PPP` = base_round(`GDP PPP`, base = 1e3),
+    `GDP PPP` = dollar(`GDP PPP`)
+  ) %>% 
+  arrange(total) %>% 
+  kable(format = "html") 
+
+kable_styling(my_table)
+```
