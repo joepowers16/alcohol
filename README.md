@@ -1,1 +1,1 @@
-This project explores publicly available data on alcohol consumption. 
+This project explores publicly available data on alcohol consumption. Please execute the command make in the terminal to recreate the entire analysis. 

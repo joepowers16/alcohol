@@ -31,10 +31,9 @@ please_install <- function(pkgs, install_fun = install.packages) {
 
 # Do you have all the needed packages? ------------------------------------
 
-tidytools <- c(
-  "devtools", "roxygen2", "usethis", "testthat", "tidyverse", "magrittr", 
-"knitr", "kableExtra", "scales", 
-)
+tidytools <- 
+  c("devtools", "roxygen2", "usethis", "testthat", "tidyverse", "magrittr", 
+    "knitr", "kableExtra", "scales")
 
 have <- rownames(installed.packages())
 needed <- setdiff(tidytools, have)
