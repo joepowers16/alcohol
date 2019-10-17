@@ -33,7 +33,7 @@ please_install <- function(pkgs, install_fun = install.packages) {
 
 tidytools <- 
   c("devtools", "roxygen2", "usethis", "testthat", "tidyverse", "magrittr", 
-    "knitr", "kableExtra", "scales")
+    "knitr", "kableExtra", "scales", "here", "fs")
 
 have <- rownames(installed.packages())
 needed <- setdiff(tidytools, have)
