@@ -1,9 +1,20 @@
-# title: "munge"
-# author: "JP"
-# date: "4/11/2019"
+##############################################################################-
+## Project: alcohol
+## Script purpose: merge alcohol data for report
+## Date: 2019-10-16
+## Author: Joseph T. Powers
+##############################################################################-
 
-library(breadcrumbs)
-library(tidyverse)
+##  Overview ----
+##############################################################################-
+# This script cleans and merges data on alcohol consumption, wealth, and latitude.
+
+## Packages, Parameters, & Input Data ----
+##############################################################################-
+suppressPackageStartupMessages(library(breadcrumbs))
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(tidyverse))
+
 source_file_paths()
 
 read_lines(file_consumption_raw, n_max = 5)
